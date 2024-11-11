@@ -92,7 +92,7 @@ export class Authorization extends BaseEntity {
       { type: 'hex', value: this.agent.address },
       { type: 'int', value: this.duration },
       { type: 'int', value: this.privilege },
-      { type: 'string', value: this.subnet },
+      { type: 'byte', value: Utils.uuidToBytes(this.subnet) },
       { type: 'int', value: this.timestamp },
       { type: 'string', value: this.topicIds }
     );

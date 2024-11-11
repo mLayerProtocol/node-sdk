@@ -20,8 +20,9 @@ async function main() {
   // }
   const wsClient = new Client(new WSProvider('ws://154.12.228.25:8088/ws'));
   const connected = await wsClient.connect();
-  console.log("connected!!!");
+ 
   if (connected) {
+    console.log('connected!!!');
     // console.log(
     //   'BLOCKSTAT-WS',
     //   await wsClient.getNodeInfo({
@@ -29,10 +30,10 @@ async function main() {
     //   })
     // );
 
-    const topicId = "9ec7d174-d9dd-7151-5295-f3751a20be9b";
+    const topicId = '9ec7d174-d9dd-7151-5295-f3751a20be9b';
     await wsClient.subscribe(
       {
-        "15ee1c23-115d-9b6f-c005-db154b42781c": [
+        '15ee1c23-115d-9b6f-c005-db154b42781c': [
           // 'snet',
           // 'auth',
           // 'sub',
@@ -45,20 +46,20 @@ async function main() {
         onError: console.log,
         onReceive: async (msg) => {
           const event = Events.fromPayload(msg.event);
-          if (msg.event.modelType == "msg" && msg.event.topic == topicId) {
+          if (msg.event.modelType == 'msg' && msg.event.topic == topicId) {
             const sentMessage = (event.payload as any).d; // if listening to
-            console.log(Buffer.from(sentMessage.d, "hex").toString()); // this is the message body
+            console.log(Buffer.from(sentMessage.d, 'hex').toString()); // this is the message body
             const client = new Client(
               new RESTProvider(process.env.MIDDLEWARE_HTTP)
             );
             await client.saveGamePoints(event);
           }
         },
-        onSubscribe: (id) => console.log("SUBSCRIPTIONID", id),
+        onSubscribe: (id) => console.log('SUBSCRIPTIONID', id),
       }
     );
   } else {
-    console.log("Unable to connect");
+    console.log('Unable to connect');
   }
   await wsClient.subscribe;
 }

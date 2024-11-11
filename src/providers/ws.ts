@@ -230,7 +230,7 @@ export class WSProvider implements Provider {
 
   private sendMessage(message: string): void {
     if (this.socket.readyState === WsService.OPEN) {
-      console.log("SENDINGMESSAGE", message);
+      console.debug('SENDINGMESSAGE', message);
       this.socket.send(message);
     } else {
       console.error("WebSocket is not open");
@@ -274,8 +274,7 @@ export class WSProvider implements Provider {
         }
       }
       try {
-        const action = `${_method}:${path.replace("/", "")}`;
-        console.log("Acction", action);
+        const action = `${_method}:${path.replace('/', '')}`;
         const id = nanoid(5);
         requestMessageBus$
           .pipe(
