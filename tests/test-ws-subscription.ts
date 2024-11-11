@@ -11,14 +11,14 @@ async function main() {
   // try {
   //   console.log(
   //     'AUTHORIZE-HTTP',
-  //     await client.getBlockStats({
+  //     await client.getNodeInfo({
   //       params: {},
   //     })
   //   );
   // } catch (e) {
   //   console.log('EEEEEE', e.message);
-  //}
-  const wsClient = new Client(new WSProvider(process.env.WEBSOCKET_URL));
+  // }
+  const wsClient = new Client(new WSProvider('ws://154.12.228.25:8088/ws'));
   const connected = await wsClient.connect();
   console.log("connected!!!");
   if (connected) {
