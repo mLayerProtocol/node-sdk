@@ -103,11 +103,11 @@ export class Subscription extends BaseEntity {
   }
 
   public static newSubscriptionPayload(payloadData: {
-    account: Address;
-    topic: string;
-    status: SubscriptionStatus;
-    role: SubscriberRole;
-    subnet: UUID;
+    account?: Address;
+    topic?: string;
+    status?: SubscriptionStatus;
+    role?: SubscriberRole;
+    subnet?: UUID;
     subscriber?: Address;
     timestamp?: number;
   }): ClientPayload<Subscription> {

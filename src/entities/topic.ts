@@ -74,9 +74,9 @@ encoder.EncoderParam{Type: encoder.StringEncoderDataType, Value: topic.ID},
   public encodeBytes(): Buffer {
     return Utils.encodeBytes(
       { type: 'int', value: this.defaultSubscriberRole },
-      { type: 'string', value: this.id },
+      { type: 'byte', value: Utils.uuidToBytes(this.id) },
       { type: 'string', value: this.meta },
-      { type: 'hex', value: this.parentTopicHash },
+      { type: 'byte', value: Buffer.from(this.parentTopicHash, 'hex') },
       { type: 'boolean', value: this.public },
       { type: 'boolean', value: this.readOnly },
       { type: 'string', value: this.ref }
