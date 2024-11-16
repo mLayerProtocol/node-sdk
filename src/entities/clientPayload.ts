@@ -18,7 +18,7 @@ export enum AdminSubnetEventType {
   // "UpgradeSubscriberEvent" = 1010,
 }
 
-export declare enum AuthorizeEventType {
+export enum AuthorizeEventType {
   'AuthorizeEvent' = 600,
   'UnauthorizeEvent' = 601,
 }
