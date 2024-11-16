@@ -2,12 +2,26 @@ import { AddressString, BaseEntity, ChainId, HexString } from './base';
 import { Utils } from '../helper';
 import { Address } from './address';
 
-// Authrization
-export enum AuthorizeEventType {
-  'AuthorizeEvent' = 100,
-  'UnauthorizeEvent' = 101,
+
+export enum AdminSubnetEventType {
+  'DeleteSubnet' = 500,
+  'CreateSubnet' = 501, // m.room.create
+  // "PrivacySet" = 1002,
+  // "BanMember" = 1003,
+  // "UnbanMember" = 1004,
+  // "ContractSet" = 1005,
+  // "UpdateName" = 1006, //  m.room.name
+  // "UpdateDescription" = 1007, //  m.room.topic
+  // "UpdateAvatar" = 1008, //  m.room.avatar
+  // "PinMessage" = 1008, //  m.room.avatar
+  'UpdateSubnet' = 509, // m.room.create
+  // "UpgradeSubscriberEvent" = 1010,
 }
 
+export declare enum AuthorizeEventType {
+  'AuthorizeEvent' = 600,
+  'UnauthorizeEvent' = 601,
+}
 // // Administrative Topic Actions
 export enum AdminTopicEventType {
   'DeleteTopic' = 1000,
@@ -42,21 +56,8 @@ export enum MemberMessageEventType {
   // IsTyping                EventType = 1203
 }
 
-// // Administrative Topic Actions
-export enum AdminSubnetEventType {
-  'DeleteSubnet' = 1300,
-  'CreateSubnet' = 1301, // m.room.create
-  // "PrivacySet" = 1002,
-  // "BanMember" = 1003,
-  // "UnbanMember" = 1004,
-  // "ContractSet" = 1005,
-  // "UpdateName" = 1006, //  m.room.name
-  // "UpdateDescription" = 1007, //  m.room.topic
-  // "UpdateAvatar" = 1008, //  m.room.avatar
-  // "PinMessage" = 1008, //  m.room.avatar
-  'UpdateSubnet' = 1309, // m.room.create
-  // "UpgradeSubscriberEvent" = 1010,
-}
+
+
 
 // // Administrative Topic Actions
 export enum AdminWalletEventType {

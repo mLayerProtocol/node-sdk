@@ -5,8 +5,8 @@ import { Address, Device } from './address';
 
 export enum AuthorizationPrivilege {
   Unauthorized = 0,
-  Basic = 10,
-  Standard = 20,
+  Guest = 10,
+  Member = 20,
   Manager = 30,
   Admin = 40,
 }
@@ -51,6 +51,7 @@ export interface IAuthorization {
   snet: string; // subnet
   ts: number; // timestmap
   sigD: ISignatureData; // signatureData
+  meta?: string; // description
 }
 
 export class Authorization extends BaseEntity {
@@ -62,6 +63,7 @@ export class Authorization extends BaseEntity {
   public timestamp: number;
   public duration: number;
   public subnet: string = '';
+  public meta: string = '';
   public signatureData: SignatureData = new SignatureData('', '', '');
 
   /**
@@ -75,6 +77,7 @@ export class Authorization extends BaseEntity {
       gr: this.grantor.toString(),
       privi: this.privilege,
       topIds: this.topicIds,
+      meta: this.meta,
       ts: this.timestamp,
       du: this.duration,
       snet: this.subnet,
@@ -91,6 +94,7 @@ export class Authorization extends BaseEntity {
       { type: 'address', value: this.account.toString() },
       { type: 'hex', value: this.agent.address },
       { type: 'int', value: this.duration },
+      { type: 'string', value: this.meta },
       { type: 'int', value: this.privilege },
       { type: 'byte', value: Utils.uuidToBytes(this.subnet) },
       { type: 'int', value: this.timestamp },

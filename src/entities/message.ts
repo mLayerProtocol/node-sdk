@@ -34,6 +34,7 @@ export interface IMessage {
   dh: string;
   url: string;
   nonce: number;
+  ets: number;
 }
 
 export class MessageAction extends BaseEntity {
@@ -126,6 +127,7 @@ export class Message extends BaseEntity {
   public dataHash: string = '';
   public url: string = '';
   public nonce: number = Date.now();
+  public eventTimestamp: number = 0;
 
   /**
    * @override
@@ -148,6 +150,7 @@ export class Message extends BaseEntity {
       dh: this.dataHash,
       url: this.url,
       nonce: this.nonce,
+      ets: this.eventTimestamp,
     };
   }
 
