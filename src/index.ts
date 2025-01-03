@@ -10,8 +10,7 @@ import { Wallet } from './entities/wallet';
 import jaysonBrowserClient from 'jayson/lib/client/browser';
 import ClientBrowser from 'jayson/lib/client/browser';
 import { EventFilter, Provider, SubscriptionEvents } from './providers';
-import { RESTProvider } from './providers/rest';
-import { WSProvider } from './providers/ws';
+
 
 export class RPCProvider implements Provider {
   private rpcClient:

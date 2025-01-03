@@ -1,25 +1,31 @@
 export const validator = {
-  publicKey: "2c2387845a0e17281653050892d3095e7fc99ad32d79b7fbdf11c9a87671daca",
-  address: "ml:103szmymv8qvl9xqzhqxswm5t8mpjsav8c6j354",
+  address: 'ddb466a5dd4a5c0835614c7a46e18943ef750a9d',
+  publicKey: '2c2387845a0e17281653050892d3095e7fc99ad32d79b7fbdf11c9a87671daca',
 };
 
 export const account = {
   privateKey:
-    "bc3d5a5a6bb5024b1a96fccb677f065985d8e65d8054095eb6468244fb5ea4a9",
+    'bc3d5a5a6bb5024b1a96fccb677f065985d8e65d8054095eb6468244fb5ea4a9',
   publicKey:
-    "02d2c4fa18ba44e53e10d5ec25b6ae8439f3fcaf9611183cdb7785dfe2f0c7ab73",
-  address: "ml103szmymv8qvl9xqzhqxswm5t8mpjsav8c6j354",
+    '02d2c4fa18ba44e53e10d5ec25b6ae8439f3fcaf9611183cdb7785dfe2f0c7ab73',
+  address: 'ml103szmymv8qvl9xqzhqxswm5t8mpjsav8c6j354',
 };
 
 export const agent = {
   privateKey:
-    "0xbc3d5a5a6bb5024b1a96fccb677f065985d8e65d8054095eb6468244fb5ea4a9",
+    '0xbc3d5a5a6bb5024b1a96fccb677f065985d8e65d8054095eb6468244fb5ea4a9',
   publicKey:
-    "0x02d2c4fa18ba44e53e10d5ec25b6ae8439f3fcaf9611183cdb7785dfe2f0c7ab73",
-  address: "0xe652d28F89A28adb89e674a6b51852D0C341Ebe9",
+    '0x02d2c4fa18ba44e53e10d5ec25b6ae8439f3fcaf9611183cdb7785dfe2f0c7ab73',
+  address: '0xe652d28F89A28adb89e674a6b51852D0C341Ebe9',
 };
 
 export const agentList = [
+  {
+    account: { address: '0xdDb466A5DD4A5C0835614C7a46E18943ef750a9d' },
+    privateKey:
+      '0xd8921f1b407a9580e31f69588d2aff7947d421e1d8aec29b827839d35252364a',
+    address: '0xcE16A3c6814c221e007c409259A256AEca7bdC02',
+  },
   {
     account: { address: 'cosmos1z7pux6petf6fvngdkap0cpyneztj5wwmlv7z9f' },
     privateKey:

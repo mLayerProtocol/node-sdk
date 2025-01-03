@@ -77,7 +77,7 @@ if (connected) {
         onError: console.log,
         onReceive: (msg) => {
           const event = Events.fromPayload(msg.event);
-          if (msg.event.modelType == topicId) {
+          if (msg.event.modelType == 'msg') {
             const sentMessage = event.payload?.data as Message; // if listening to
             console.log(sentMessage.data); // this is the message body
           }
