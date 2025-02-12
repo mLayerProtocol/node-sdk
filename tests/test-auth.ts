@@ -30,7 +30,7 @@ const client = jayson.client.tcp({
 async function main() {
   const chainId = new ChainId('84532');
   console.log('ChainID', chainId.bytes().toString('hex'));
-  return;
+  // return;
   const authority: Authorization = new Authorization();
   console.log('keypairsss', Utils.generateKeyPairSecp());
   console.log(
@@ -44,8 +44,7 @@ async function main() {
   authority.timestamp = 1714408257702;
   authority.topicIds = '*';
   // authority.privilege = 3;
-  authority.subnet =
-    'c870ce77c41a36f1fc60966c8c4e111964a32af400e7d9cbe78ac9117d4e0cdb';
+  authority.subnet = '534e4554-0000-0000-0000-000000000000';
   authority.duration = 30 * 24 * 60 * 60 * 1000; // 30 days
 
   const encoded = authority.encodeBytes();

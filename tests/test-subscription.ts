@@ -13,11 +13,11 @@ import { validator, account, agent, agentList } from "./lib/keys";
 import { Topic } from "../src/entities/topic";
 import {
   Subscription,
-  SubscriptionRole,
+  SubscriberRole,
   SubscriptionStatus,
-} from "../src/entities/subscription";
-import { Address } from "../src/entities";
-import { RESTProvider } from "../src/providers";
+} from '../src/entities/subscription';
+import { Address, ChainId } from '../src/entities';
+import { RESTProvider } from '../src/providers';
 
 // console.log(Utils.generateKeyPairEdd());
 
@@ -38,33 +38,43 @@ async function main() {
   //   Utils.toAddress(Buffer.from(validator.publicKey, 'hex'))
   // );
   // subscribe.status = 1;
-  subscribe.topic = "9b93dffe-01a6-41eb-7d61-19840b19bc80";
-  subscribe.subscriber = Address.fromString(agentList[2].account.address);
+  subscribe.topic = '746f7069-0000-0000-0000-000000000000';
+  subscribe.subscriber = Address.fromString(
+    '0x59fD8f94dDd1Fe6066d300F74afD5E3a01970e43'
+  );
   subscribe.status = SubscriptionStatus.Subscribed;
-  subscribe.role = SubscriptionRole.Member;
-  subscribe.ref = "com.ref.com/sub1";
+  subscribe.role = SubscriberRole.Writer;
+  subscribe.ref = 'com.ref.com/sub1';
+  subscribe.subnet = '534e4554-0000-0000-0000-000000000000';
 
   //   subscribe.agent = "Bitcoin world";
   //   subscribe.reference = "898989";
 
   const payload: ClientPayload<Subscription> = new ClientPayload();
   payload.data = subscribe;
-  payload.subnet = "360db526-9592-b78c-1c5c-f57a92410857";
+  payload.subnet = '534e4554-0000-0000-0000-000000000000';
   payload.timestamp = 2705392177908;
   payload.eventType = MemberTopicEventType.SubscribeEvent;
-  payload.validator = validator.publicKey;
-  payload.account = Address.fromString(agentList[0].account.address);
+  payload.validator = validator.address;
+  payload.chainId = new ChainId('84532');
+  payload.account = Address.fromString(
+    '0x59fD8f94dDd1Fe6066d300F74afD5E3a01970e43'
+  );
   const pb = payload.encodeBytes();
-  console.log("🚀 ~ main ~ pb:", pb.toString("hex"));
+  console.log('🚀 ~ main ~ pb:', pb.toString('hex'));
   payload.signature = await Utils.signMessageEcc(pb, agentList[0].privateKey);
   console.log(
-    "Payload",
+    'Payload',
     JSON.stringify(payload.asPayload(), function (k, v) {
-      return v === "" ? undefined : v;
+      return v === '' ? undefined : v;
     })
   );
 
-  const client = new Client(new RESTProvider("http://localhost:9531"));
-  console.log("AUTHORIZE", await client.createSubscription(payload));
+  const client = new Client(new RESTProvider('http://localhost:8080'));
+  try {
+    console.log(await client.createSubscription(payload));
+  } catch (e) {
+    console.log('Subscribe Error', e);
+  }
 }
 main().then();

@@ -8,6 +8,7 @@ export * from './src/index';
 export * from './src/entities';
 export * from './src/constants';
 export * from './src/providers';
+export * from './src/encoder';
 const mlayer = {
   Client,
   Utils,

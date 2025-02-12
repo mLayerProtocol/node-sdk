@@ -6,7 +6,7 @@ export class RESTProvider implements Provider {
   private server: string = "http://localhost:9531";
 
   constructor(host?: string, ethProvider?: unknown) {
-    if (host.slice(-1) == `/`) host = host.substring(0, host.length - 1);
+    if (host?.slice(-1) == `/`) host = host.substring(0, host.length - 1);
     this.server = host;
   }
 
@@ -68,10 +68,13 @@ export class RESTProvider implements Provider {
             params,
           });
       }
-
+console.log(response.status, response.data);
       return (await response.data) as Record<string, unknown>;
     } catch (e) {
-      throw e; //TODO dont throw error
+      // throw e.response; //TODO dont throw error
+      const err = new Error(e.response?.data?.error ?? e.message ?? e);
+      err.name = 'Request error';
+      throw err;
     }
   }
 }

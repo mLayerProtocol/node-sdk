@@ -1,18 +1,9 @@
 import { ClientPayload, UUID } from '../entities';
 import { Events, IEvents } from '../entities/event';
+import { EntityType } from './interfaces';
 
-export enum EntityType {
-  Auth = 'auth',
-  Topic = 'top',
-  Subscription = 'sub',
-  Message = 'msg',
-  Subnet = 'snet',
-  Wallet = 'wal',
-}
-export type FilterValue = '*' | EntityType | UUID;
-export type EventFilter = Record<string, FilterValue[]>;
 export interface ISubRespData extends IEvents {
-  modelType: string;
+  modelType: EntityType | string;
   topic?: string;
 }
 type PartialWithRequired<T, K extends keyof T> = Partial<T> & Pick<T, K>;
@@ -40,7 +31,7 @@ export type SubscriptionResponse = {
   event: ISubRespData;
 };
 
-export interface SubscriptionEvents {
+export interface SubscriptionEventHandler {
   onSubscribe?: (id: string) => void;
   onReceive: (response: SubscriptionResponse) => void;
   onError?: (error: Error) => void;

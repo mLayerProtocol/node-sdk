@@ -200,3 +200,12 @@ export class Message extends BaseEntity {
     );
   }
 }
+
+
+
+export class DataAction {
+  constructor(private action: Number, private params: Buffer) {}
+  public toPayload() {
+    return { a: this.action, p: this.params };
+  }
+}

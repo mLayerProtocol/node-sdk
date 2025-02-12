@@ -5,12 +5,17 @@ import axios, { AxiosResponse } from 'axios';
 import { Topic } from './entities/topic';
 import { Subscription } from './entities/subscription';
 import { Message } from './entities/message';
-import { Subnet } from './entities/subNetwork';
+import { Subnet } from './entities/subnet';
 import { Wallet } from './entities/wallet';
 import jaysonBrowserClient from 'jayson/lib/client/browser';
 import ClientBrowser from 'jayson/lib/client/browser';
-import { EventFilter, Provider, SubscriptionEvents } from './providers';
-
+import {
+  EventFilter,
+  EventFilterV2,
+  Provider,
+  SubscriptionEventHandler,
+  SubscriptionEvents,
+} from './providers';
 
 export class RPCProvider implements Provider {
   private rpcClient:
@@ -74,11 +79,11 @@ export class Client<P> {
     return await this.provider?.connect();
   }
 
-  public async subscribe(
-    filter: EventFilter,
-    events: SubscriptionEvents
+  public async subscribe<T extends EventFilter | EventFilterV2>(
+    filter: T,
+    handlers: SubscriptionEventHandler
   ): Promise<void> {
-    return await this.provider?.subscribe(filter, events);
+    return await this.provider?.subscribe(filter, handlers);
   }
 
   public async authorize(
@@ -265,15 +270,6 @@ export class Client<P> {
       path: '/wallets',
       method: 'post',
       payload,
-    });
-  }
-
-  public async saveGamePoints(payload: any): Promise<Record<string, unknown>> {
-    return await this.provider.makeRequest({
-      path: '/activity/game',
-      method: 'post',
-      payload,
-      prefix: 'v1',
     });
   }
 }

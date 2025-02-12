@@ -90,6 +90,8 @@ export interface IClientPayload {
   chId: string;
 }
 
+
+
 export class ClientPayload<T> extends BaseEntity {
   public data: T;
   public timestamp: number = 0;
@@ -160,6 +162,24 @@ export class ClientPayload<T> extends BaseEntity {
       acct: this.account.toAddressString(),
       nonce: this.nonce,
     };
+  }
+
+  /**
+   * @override
+   * @returns {IAuthorization}
+   */
+  public fromPayload(payload: IClientPayload): ClientPayload<unknown> {
+    this.chainId = new ChainId(payload.chId);
+    this.data = payload.d as any;
+    this.timestamp = payload.ts;
+    this.eventType = payload.ty;
+    this.signature = payload.sig;
+    this.subnet = payload.snet;
+    this.hash = payload.h;
+    this.validator = payload.val;
+    this.account = Address.fromString(payload.acct);
+    this.nonce = payload.nonce;
+    return this;
   }
 
   public sign(params: {

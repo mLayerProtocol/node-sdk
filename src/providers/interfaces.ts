@@ -1,3 +1,4 @@
+import { SubscriptionEventHandler } from '.';
 import { ClientPayload, UUID } from '../entities';
 import { Events, IEvents } from '../entities/event';
 
@@ -9,8 +10,20 @@ export enum EntityType {
   Subnet = 'snet',
   Wallet = 'wal',
 }
+
 export type FilterValue = '*' | EntityType | UUID;
-export type EventFilter = Record<string, FilterValue[]>;
+type ExludedFilter = Exclude<string, 'snet'>;
+export type FilterV2 = {
+  snet: UUID;
+  t: EntityType;
+  f: Record<ExludedFilter, any>;
+};
+export type EventFilter = Record<UUID | EntityType, FilterValue[] | number>;
+export type EventFilterV2 = {
+  _v: 2;
+  fs: FilterV2[];
+};
+
 export interface ISubRespData extends IEvents {
   modelType: string;
   topic?: string;
@@ -47,8 +60,8 @@ export interface SubscriptionEvents {
 export interface Provider {
   connect?: (options?: any) => Promise<boolean>;
   subscribe?: (
-    filter: EventFilter,
-    events: SubscriptionEvents
+    filter: EventFilter | EventFilterV2,
+    events: SubscriptionEventHandler
   ) => Promise<void>;
   endSubscription?: (subscriptionId: string) => Promise<void>;
   makeRequest: <T, O>(

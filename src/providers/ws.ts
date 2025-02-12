@@ -118,7 +118,20 @@ export class WSProvider implements Provider {
         subscriptionMessageBus$
           .pipe(
             rxFilter((message: any) => {
-              return message?.subscriptionId === subscr.id;
+              if (message?.subscriptionId === subscr.id) {
+                for (let fil of Object.values(filter)) {
+                  for (let k of Object.keys(fil)) {
+                    if (
+                      String(message?.event?.pld?.d[k] ?? '').toLowerCase() !==
+                      String(fil[k]).toLowerCase()
+                    ) {
+                      return false;
+                    }
+                  }
+                }
+                return true;
+              }
+              return false;
             }),
             catchError((error) => {
               console.error("An error occurred:", error);
