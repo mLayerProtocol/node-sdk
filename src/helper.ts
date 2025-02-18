@@ -315,7 +315,7 @@ export class Utils {
         case 'address':
           console.log(
             'ACcOUNTBUFFER',
-            Buffer.from(arg.value as string).toString('hex')
+            Buffer.from((arg.value as string).toLowerCase()).toString('hex')
           );
           buffers.push(Buffer.from(arg.value as string));
           // if ((arg.value as string).startsWith("0x")) {

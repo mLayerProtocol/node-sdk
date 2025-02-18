@@ -21,13 +21,13 @@ import { RESTProvider } from '../src/providers';
 import {
   AdminAuthority,
   ChainId,
-  EntityType,
-  RegistryEntity,
+  ServiceType,
+  RegistryService,
 } from '../src/entities';
 import { DataEncoder, EncoderType } from '../src/encoder';
 import {
   CapabilityTypes,
-  EntityCapability,
+  ServiceCapability,
 } from '../src/entities/capabilities';
 import { AutomationCapabilities } from '../src/entities/capabilities/automation';
 import { NLPCapabilities } from '../src/entities/capabilities/nlp';
@@ -58,30 +58,30 @@ async function main() {
     '0x59fD8f94dDd1Fe6066d300F74afD5E3a01970e43'
   );
   const externalId = '534e4554-0000-0000-0000-E0092a000000';
-  const entity = new RegistryEntity(
-    EntityType.AI,
+  const service = new RegistryService(
+    ServiceType.AI,
     externalId,
     'AgentM',
     'AgentM helps boook flights and manages itinerary. Hi'
   );
-  entity.adminAuthority = new AdminAuthority(
+  service.adminAuthority = new AdminAuthority(
     externalId,
     Address.fromString(account).toAddressString(),
     Address.fromString(account).toAddressString()
   );
-  const nlpCapability = new EntityCapability(
+  const nlpCapability = new ServiceCapability(
     CapabilityTypes.NLP,
     new NLPCapabilities()
   );
 
-  entity.capabilities.push(nlpCapability);
+  service.capabilities.push(nlpCapability);
 
   const dataEncoder = new DataEncoder(EncoderType.MessagePack);
-  const encodedEntity = dataEncoder.encode(entity);
+  const encodedEntity = dataEncoder.encode(service);
   message.data = dataEncoder.encode(
-    new DataAction(1, dataEncoder.encode(entity)).toPayload()
+    new DataAction(1, dataEncoder.encode(service)).toPayload()
   );
-  console.log('ENCODED', dataEncoder.decode(dataEncoder.encode(entity)));
+  console.log('ENCODED', dataEncoder.decode(dataEncoder.encode(service)));
   // message.data = Buffer.from('Hello World');
   message.actions = messageActions;
   message.dataType = DataType.JSON;

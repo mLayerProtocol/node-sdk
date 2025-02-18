@@ -1,7 +1,6 @@
 import { AddressString, BaseEntity, ChainId, HexString } from './base';
 import { Utils } from '../helper';
-import { Address } from './address';
-
+import { Account, Address } from './address';
 
 export enum AdminSubnetEventType {
   'DeleteSubnet' = 500,
@@ -56,9 +55,6 @@ export enum MemberMessageEventType {
   // IsTyping                EventType = 1203
 }
 
-
-
-
 // // Administrative Topic Actions
 export enum AdminWalletEventType {
   'DeleteWallet' = 1400,
@@ -90,12 +86,10 @@ export interface IClientPayload {
   chId: string;
 }
 
-
-
 export class ClientPayload<T> extends BaseEntity {
   public data: T;
   public timestamp: number = 0;
-  public account: Address = new Address();
+  public account: Account = new Account();
   public validator: string = '';
   public eventType:
     | AuthorizeEventType

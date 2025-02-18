@@ -7,7 +7,7 @@ import { SecurityMonitoringCapabilities } from './capabilities/security';
 import { SocialMediaCapabilities } from './capabilities/social';
 import { ComputerVisionCapabilities } from './capabilities/vision';
 
-// export class EntityCapabilities {
+// export class ServiceCapabilities {
 //   nlp?: NLPCapabilities;
 //   computerVision?: ComputerVisionCapabilities;
 //   audioProcessing?: AudioProcessingCapabilities;
@@ -30,8 +30,8 @@ import { ComputerVisionCapabilities } from './capabilities/vision';
 //     };
 //   }
 
-//   static fromPayload(payload: any): EntityCapabilities {
-//     const capabilities = new EntityCapabilities();
+//   static fromPayload(payload: any): ServiceCapabilities {
+//     const capabilities = new ServiceCapabilities();
 //     if (payload.nlp)
 //       capabilities.nlp = NLPCapabilities.fromPayload(payload.nlp);
 //     if (payload.computerVision)
@@ -69,10 +69,20 @@ export enum CapabilityTypes {
   ComputerVision = 'computerVision',
 }
 
-export class EntityCapability {
+type CapabilityScope =
+  | AudioProcessingCapabilities
+  | AutomationCapabilities
+  | CryptoTradingCapabilities
+  | DataAnalyticsCapabilities
+  | NLPCapabilities
+  | SecurityMonitoringCapabilities
+  | SocialMediaCapabilities
+  | ComputerVisionCapabilities;
+
+export class ServiceCapability {
   constructor(
     protected capabilityType: CapabilityTypes,
-    protected scope: any
+    protected scope: CapabilityScope
   ) {}
 
   toPayload(): Record<string, any> {
@@ -85,7 +95,7 @@ export class EntityCapability {
   static fromPayload(payload: {
     capabilityType: CapabilityTypes;
     scope: any;
-  }): EntityCapability {
-    return new EntityCapability(payload.capabilityType, payload.scope);
+  }): ServiceCapability {
+    return new ServiceCapability(payload.capabilityType, payload.scope);
   }
 }

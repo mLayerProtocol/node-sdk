@@ -79,8 +79,8 @@ encoder.EncoderParam{Type: encoder.StringEncoderDataType, Value: topic.ID},
       { type: 'byte', value: Utils.uuidToBytes(this.parentTopic) },
       { type: 'boolean', value: this.public },
       { type: 'boolean', value: this.readOnly },
-      { type: 'string', value: this.ref }
-      // { type: 'string', value: this.subnet }
+      { type: 'string', value: this.ref },
+      { type: 'byte', value: Utils.uuidToBytes(this.subnet) }
     );
   }
 }

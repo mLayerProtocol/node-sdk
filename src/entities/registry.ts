@@ -1,5 +1,5 @@
 import { HexString } from './base';
-import { EntityCapability } from './capabilities';
+import { ServiceCapability } from './capabilities';
 import { AudioProcessingCapabilities } from './capabilities/audio';
 import { AutomationCapabilities } from './capabilities/automation';
 import { CryptoTradingCapabilities } from './capabilities/crypto';
@@ -9,15 +9,15 @@ import { SecurityMonitoringCapabilities } from './capabilities/security';
 import { SocialMediaCapabilities } from './capabilities/social';
 import { ComputerVisionCapabilities } from './capabilities/vision';
 
-export enum EntityType {
+export enum ServiceType {
   Account = 'account',
   Organization = 'organization',
   AI = 'ai',
   Device = 'device',
   SmartContract = 'smart_contract',
   Api = 'api',
-  Bot = 'bots',
-  Feed = 'data_feeds',
+  Bot = 'bot',
+  Feed = 'data_feed',
 }
 
 // Example implementations of fromPayload for each class:
@@ -150,7 +150,7 @@ export class Creator {
   }
 }
 
-export class EntityMetadata {
+export class ServiceMetadata {
   constructor(
     public externalId?: string,
     public name?: string,
@@ -163,8 +163,8 @@ export class EntityMetadata {
     public status?: string
   ) {}
 
-  static fromPayload(payload: Record<string, any>): EntityMetadata {
-    return new EntityMetadata(
+  static fromPayload(payload: Record<string, any>): ServiceMetadata {
+    return new ServiceMetadata(
       payload.externalId,
       payload.name,
       payload.version,
@@ -604,7 +604,7 @@ export class AdminAuthority {
   constructor(
     public externalId: string,
     public authorizedAccount: string,
-    public entityAccount: string,
+    public serviceAccount: string,
     public timestamp?: number,
     public signature?: any
   ) {}
@@ -613,7 +613,7 @@ export class AdminAuthority {
     return new AdminAuthority(
       payload.externalId,
       payload.authorizedAccount,
-      payload.entityAccount,
+      payload.serviceAccount,
       payload.ts,
       payload.sign
     );
@@ -623,7 +623,7 @@ export class AdminAuthority {
     return {
       externalId: this.externalId,
       authorizedAccount: this.authorizedAccount,
-      entityAccount: this.entityAccount,
+      serviceAccount: this.serviceAccount,
       ts: this.timestamp,
       sign: this.signature,
     };
@@ -650,15 +650,15 @@ export class AgentTopic {
   }
 }
 
-export class RegistryEntity {
+export class RegistryService {
   constructor(
-    type: EntityType,
+    type: ServiceType,
     externalId: string,
     name: string,
     description: string
   ) {
-    this.metadata = new EntityMetadata();
-    this.entityType = type;
+    this.metadata = new ServiceMetadata();
+    this.serviceType = type;
     this.metadata.externalId = externalId;
     this.metadata.name = name;
     this.metadata.description = description;
@@ -667,7 +667,7 @@ export class RegistryEntity {
   // REQUIRED fields
   version: number; // maps to _v
   reference: string; // maps to ref
-  entityType: EntityType; // maps to _t
+  serviceType: ServiceType; // maps to _t
   adminAuthority: AdminAuthority; // maps to admin_authority
 
   // Optional fields with underscore prefix
@@ -675,8 +675,8 @@ export class RegistryEntity {
   uri?: string; // maps to _uri
 
   // Core entity data
-  metadata: EntityMetadata;
-  capabilities: EntityCapability[];
+  metadata: ServiceMetadata;
+  capabilities: ServiceCapability[];
   security: SecurityProfile;
   performance: PerformanceMetrics;
   api: API;
@@ -693,7 +693,7 @@ export class RegistryEntity {
     return {
       _v: this.version,
       ref: this.reference,
-      _t: this.entityType,
+      _t: this.serviceType,
       admin_authority: this.adminAuthority.toPayload(),
       _id: this.id,
       _uri: this.uri,
@@ -711,32 +711,34 @@ export class RegistryEntity {
     };
   }
 
-  static fromPayload(payload: any): RegistryEntity {
-    const entity = new RegistryEntity(
-      payload.entityType,
+  static fromPayload(payload: any): RegistryService {
+    const service = new RegistryService(
+      payload.serviceType,
       payload.metadata?.externalId,
       payload.metadata?.name,
       payload.metadata?.description
     );
-    entity.version = payload._v;
-    entity.reference = payload.ref;
-    entity.entityType = payload._t as EntityType;
-    entity.adminAuthority = AdminAuthority.fromPayload(payload.admin_authority);
-    entity.id = payload._id;
-    entity.uri = payload._uri;
-    entity.metadata = EntityMetadata.fromPayload(payload.metadata);
-    entity.capabilities = payload.capabilities?.map((cap: any) =>
-      EntityCapability.fromPayload(cap)
+    service.version = payload._v;
+    service.reference = payload.ref;
+    service.serviceType = payload._t as ServiceType;
+    service.adminAuthority = AdminAuthority.fromPayload(
+      payload.admin_authority
     );
-    entity.security = SecurityProfile.fromPayload(payload.security);
-    entity.performance = PerformanceMetrics.fromPayload(payload.performance);
-    entity.api = API.fromPayload(payload.api);
-    entity.pricing = Pricing.fromPayload(payload.pricing);
-    entity.compliance = Compliance.fromPayload(payload.compliance);
-    entity.dependencies = Dependencies.fromPayload(payload.dependencies);
-    entity.training = Training.fromPayload(payload.training);
-    entity.interfaceKeys = payload.interface_keys;
-    entity.topics = payload.topics.map((t: any) => AgentTopic.fromPayload(t));
-    return entity;
+    service.id = payload._id;
+    service.uri = payload._uri;
+    service.metadata = ServiceMetadata.fromPayload(payload.metadata);
+    service.capabilities = payload.capabilities?.map((cap: any) =>
+      ServiceCapability.fromPayload(cap)
+    );
+    service.security = SecurityProfile.fromPayload(payload.security);
+    service.performance = PerformanceMetrics.fromPayload(payload.performance);
+    service.api = API.fromPayload(payload.api);
+    service.pricing = Pricing.fromPayload(payload.pricing);
+    service.compliance = Compliance.fromPayload(payload.compliance);
+    service.dependencies = Dependencies.fromPayload(payload.dependencies);
+    service.training = Training.fromPayload(payload.training);
+    service.interfaceKeys = payload.interface_keys;
+    service.topics = payload.topics.map((t: any) => AgentTopic.fromPayload(t));
+    return service;
   }
 }

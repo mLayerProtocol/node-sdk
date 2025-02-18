@@ -1,7 +1,7 @@
 import { isHexString } from "ethers";
 import { BaseEntity } from "./base";
 import { Utils } from "../helper";
-import { Address } from './address';
+import { Account, Address } from './address';
 import { DataType } from '../constants';
 
 type AddressString = string;
@@ -116,7 +116,7 @@ export class Message extends BaseEntity {
   public id: string = '';
   public timestamp: number = 0;
   public topic: string = '';
-  public sender: Address = Address.fromString('');
+  public sender: Account = Account.fromString('');
   public receiver: Address = Address.fromString('');
   public dataType: DataType = DataType.BINARY;
   public data: Buffer = Buffer.from('');

@@ -72,9 +72,12 @@ console.log(response.status, response.data);
       return (await response.data) as Record<string, unknown>;
     } catch (e) {
       // throw e.response; //TODO dont throw error
-      const err = new Error(e.response?.data?.error ?? e.message ?? e);
-      err.name = 'Request error';
-      throw err;
+      if (e.response?.data?.error) {
+        const err = new Error(e.response?.data?.error);
+        err.name = 'Request error';
+        throw err;
+      }
+      throw e;
     }
   }
 }

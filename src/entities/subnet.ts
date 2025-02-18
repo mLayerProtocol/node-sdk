@@ -69,7 +69,7 @@ export class Subnet extends BaseEntity {
     // }
     return Utils.encodeBytes(
       // { type: 'int', value: this.createTopicPrivilege },
-      { type: 'string', value: this.account.toAddressString() },
+      { type: 'address', value: this.account.toAddressString() },
       { type: 'int', value: this.defaultAuthPrivilege },
       { type: 'string', value: this.meta },
       { type: 'string', value: this.reference },

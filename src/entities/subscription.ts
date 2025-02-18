@@ -97,7 +97,7 @@ export class Subscription extends BaseEntity {
       { type: 'string', value: this.ref },
       { type: 'int', value: this.role },
       { type: 'int', value: this.status },
-      { type: 'string', value: this.subscriber.toString() },
+      { type: 'address', value: this.subscriber.toString() },
       { type: 'byte', value: Utils.uuidToBytes(this.topic) }
     );
   }
