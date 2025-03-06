@@ -11,7 +11,7 @@ import {
 import { Client, RESTProvider } from '../src';
 import { validator, account, agent, agentList } from './lib/keys';
 import { Address } from '../src/entities/address';
-import { Application } from '../src/entities/subNetwork';
+import { Application } from '../src/entities/app';
 
 // console.log(Utils.generateKeyPairEdd());
 
@@ -24,7 +24,7 @@ import { Application } from '../src/entities/subNetwork';
 // };
 
 async function main() {
-  const subNetwork: Application = new Application();
+  const app: Application = new Application();
   //console.log('keypairsss', Utils.generateKeyPairSecp());
   // console.log(
   //   'BECH32ADDRESS',
@@ -32,12 +32,12 @@ async function main() {
   //   Utils.toAddress(Buffer.from(validator.publicKey, 'hex'))
   // );
 
-  subNetwork.meta = 'New Network';
-  subNetwork.reference = 'a898978';
-  subNetwork.owner = Address.fromString(agentList[0].account.address);
+  app.meta = 'New Network';
+  app.reference = 'a898978';
+  app.owner = Address.fromString(agentList[0].account.address);
 
   const payload: ClientPayload<Application> = new ClientPayload();
-  payload.data = subNetwork;
+  payload.data = app;
   payload.timestamp = 1705392178023;
   payload.eventType = AdminApplicationEventType.CreateApplication;
   payload.validator = validator.publicKey;
