@@ -48,7 +48,7 @@ export interface IAuthorization {
   privi: AuthorizationPrivilege;
   topIds: string; // "*" all topics or comma separated list of topic ids
   du: number; // duration
-  snet: string; // subnet
+  app: string; // app
   ts: number; // timestmap
   sigD: ISignatureData; // signatureData
   meta?: string; // description
@@ -62,7 +62,7 @@ export class Authorization extends BaseEntity {
   public topicIds: string = '';
   public timestamp: number;
   public duration: number;
-  public subnet: string = '';
+  public app: string = '';
   public meta: string = '';
   public signatureData: SignatureData = new SignatureData('', '', '');
 
@@ -80,7 +80,7 @@ export class Authorization extends BaseEntity {
       meta: this.meta,
       ts: this.timestamp,
       du: this.duration,
-      snet: this.subnet,
+      app: this.app,
       sigD: this.signatureData.asPayload(),
     };
   }
@@ -96,7 +96,7 @@ export class Authorization extends BaseEntity {
       { type: 'int', value: this.duration },
       { type: 'string', value: this.meta },
       { type: 'int', value: this.privilege },
-      { type: 'byte', value: Utils.uuidToBytes(this.subnet) },
+      { type: 'byte', value: Utils.uuidToBytes(this.app) },
       { type: 'int', value: this.timestamp },
       { type: 'string', value: this.topicIds }
     );

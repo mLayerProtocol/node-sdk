@@ -59,13 +59,13 @@ const connected = await wsClient.connect();
 if (connected) {
   try {
     console.log('Node Info', await wsClient.getNodeInfo());
-    const subnetId = '2274aec8-6107-cb4f-5204-de5a9aaedb67';
+    const projectId = '2274aec8-6107-cb4f-5204-de5a9aaedb67';
     const topicId = 'f0b7be5f-3e70-0a05-6f04-797462ec3e61';
 
     await wsClient.subscribe(
       {
-        [subnetId]: [
-          'snet',
+        [projectId]: [
+          'app',
           'auth',
           'sub',
           'top',

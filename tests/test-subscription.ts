@@ -45,14 +45,14 @@ async function main() {
   subscribe.status = SubscriptionStatus.Subscribed;
   subscribe.role = SubscriberRole.Writer;
   subscribe.ref = 'com.ref.com/sub1';
-  subscribe.subnet = '534e4554-0000-0000-0000-000000000000';
+  subscribe.app = '534e4554-0000-0000-0000-000000000000';
 
   //   subscribe.agent = "Bitcoin world";
   //   subscribe.reference = "898989";
 
   const payload: ClientPayload<Subscription> = new ClientPayload();
   payload.data = subscribe;
-  payload.subnet = '534e4554-0000-0000-0000-000000000000';
+  payload.app = '534e4554-0000-0000-0000-000000000000';
   payload.timestamp = 2705392177908;
   payload.eventType = MemberTopicEventType.SubscribeEvent;
   payload.validator = validator.address;

@@ -35,7 +35,7 @@ async function main() {
     await wsClient.subscribe(
       {
         '15ee1c23-115d-9b6f-c005-db154b42781c': [
-          // 'snet',
+          // 'app',
           // 'auth',
           // 'sub',
           // 'top',

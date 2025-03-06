@@ -14,7 +14,7 @@ type HexString = string;
 //   topic: string;
 //   status: SubscriptionStatus;
 //   role: SubscriberRole;
-//   subnet: UUID;
+//   app UUID;
 //   subscriber?: Address;
 //   timestamp?: number;
 // };
@@ -22,7 +22,7 @@ type HexString = string;
 export interface ISubscription {
   id?: string;
   top: string;
-  snet: string;
+  app: string;
   ref: string;
   meta?: string;
   sub: AddressString;
@@ -56,7 +56,7 @@ export enum SubscriberRole {
 export class Subscription extends BaseEntity {
   public id: string = '';
   public topic: string = '';
-  public subnet: string = '';
+  public app: string = '';
   public ref: string = '';
   public meta: string = '';
   public subscriber: Address = Address.fromString('');
@@ -77,7 +77,7 @@ export class Subscription extends BaseEntity {
       top: this.topic,
       sub: this.subscriber.toString(),
       sig: this.signature,
-      snet: this.subnet,
+      app: this.app,
       h: this.hash,
       eH: this.eventHash,
       st: this.status,
@@ -107,21 +107,21 @@ export class Subscription extends BaseEntity {
     topic?: string;
     status?: SubscriptionStatus;
     role?: SubscriberRole;
-    subnet?: UUID;
+    app?: UUID;
     subscriber?: Address;
     timestamp?: number;
   }): ClientPayload<Subscription> {
     const subscribe: Subscription = new Subscription();
     subscribe.status = payloadData.status ?? SubscriptionStatus.Invited;
     subscribe.role = payloadData.role;
-    subscribe.subnet = payloadData.subnet;
+    subscribe.app = payloadData.app;
     subscribe.topic = payloadData.topic;
     subscribe.subscriber = payloadData.subscriber ?? payloadData.account;
 
     const payload: ClientPayload<Subscription> = new ClientPayload();
     // payload.chainId = new ChainId(ML_CHAIN_ID);
     payload.data = subscribe;
-    payload.subnet = payloadData.subnet;
+    payload.app = payloadData.app;
     payload.timestamp = payloadData?.timestamp;
     payload.eventType = MemberTopicEventType.SubscribeEvent;
     payload.account = payloadData.account;

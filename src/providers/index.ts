@@ -9,7 +9,7 @@ export interface ISubRespData extends IEvents {
 type PartialWithRequired<T, K extends keyof T> = Partial<T> & Pick<T, K>;
 type PartialEvent = PartialWithRequired<
   IEvents,
-  | 'snet'
+  | 'app'
   | 'id'
   | 'blk'
   | 'cy'

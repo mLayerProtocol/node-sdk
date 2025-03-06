@@ -2,9 +2,9 @@ import { AddressString, BaseEntity, ChainId, HexString } from './base';
 import { Utils } from '../helper';
 import { Account, Address } from './address';
 
-export enum AdminSubnetEventType {
-  'DeleteSubnet' = 500,
-  'CreateSubnet' = 501, // m.room.create
+export enum AdminApplicationEventType {
+  'DeleteApplication' = 500,
+  'CreateApplication' = 501, // m.room.create
   // "PrivacySet" = 1002,
   // "BanMember" = 1003,
   // "UnbanMember" = 1004,
@@ -13,7 +13,7 @@ export enum AdminSubnetEventType {
   // "UpdateDescription" = 1007, //  m.room.topic
   // "UpdateAvatar" = 1008, //  m.room.avatar
   // "PinMessage" = 1008, //  m.room.avatar
-  'UpdateSubnet' = 509, // m.room.create
+  'UpdateApplication' = 509, // m.room.create
   // "UpgradeSubscriberEvent" = 1010,
 }
 
@@ -78,7 +78,7 @@ export interface IClientPayload {
   ty: number; // `type`
   val: AddressString;
   nonce: number;
-  snet?: string;
+  app?: string;
   // Secondary
   sig: HexString;
   h: HexString;
@@ -94,13 +94,13 @@ export class ClientPayload<T> extends BaseEntity {
   public eventType:
     | AuthorizeEventType
     | AdminTopicEventType
-    | AdminSubnetEventType
+    | AdminApplicationEventType
     | AdminWalletEventType
     | MemberTopicEventType
     | MemberMessageEventType;
   public authHash: string = '';
   public nonce: number = 0;
-  public subnet: string = '';
+  public app: string = '';
   public chainId: ChainId = new ChainId('');
 
   // Secondary
@@ -112,11 +112,12 @@ export class ClientPayload<T> extends BaseEntity {
       this.chainId.get() == '' &&
       ![
         ...Object.values(AuthorizeEventType),
-        ...Object.values(AdminSubnetEventType),
+        ...Object.values(AdminApplicationEventType),
       ].find((d: any) => Number(d) == Number(this.eventType))
     ) {
       throw 'chainId is required';
     }
+
     return Utils.encodeBytes(
       {
         type: 'byte',
@@ -127,10 +128,12 @@ export class ClientPayload<T> extends BaseEntity {
         value: Utils.keccak256Hash((this.data as BaseEntity).encodeBytes()),
       },
       { type: 'int', value: this.eventType },
-      { type: 'byte', value: Utils.uuidToBytes(this.subnet) },
+      { type: 'byte', value: Utils.uuidToBytes(this.app) },
       ...((this.account?.toString() ?? '') == ''
         ? []
-        : ([{ type: 'address', value: this.account.toString() }] as any[])),
+        : ([
+            { type: 'address', value: this.account.toAddressString() },
+          ] as any[])),
       // { type: "hex", value: this.authHash },
 
       { type: 'hex', value: this.validator },
@@ -150,7 +153,7 @@ export class ClientPayload<T> extends BaseEntity {
       ts: this.timestamp,
       ty: this.eventType,
       sig: this.signature,
-      snet: this.subnet,
+      app: this.app,
       h: this.hash,
       val: this.validator,
       acct: this.account.toAddressString(),
@@ -168,7 +171,7 @@ export class ClientPayload<T> extends BaseEntity {
     this.timestamp = payload.ts;
     this.eventType = payload.ty;
     this.signature = payload.sig;
-    this.subnet = payload.snet;
+    this.app = payload.app;
     this.hash = payload.h;
     this.validator = payload.val;
     this.account = Address.fromString(payload.acct);
@@ -178,14 +181,14 @@ export class ClientPayload<T> extends BaseEntity {
 
   public sign(params: {
     chainId: string | number;
-    agentPrivateKey: string;
+    devicePrivateKey: string;
     validator: string;
   }): ClientPayload<T> {
     if (!this.timestamp) this.timestamp = Date.now();
     this.chainId = new ChainId(String(params.chainId));
     this.validator = params.validator;
     const pb = this.encodeBytes();
-    this.signature = Utils.signMessageEcc(pb, params.agentPrivateKey);
+    this.signature = Utils.signMessageEcc(pb, params.devicePrivateKey);
     console.log('validator', params.validator, this.validator);
     return this;
   }

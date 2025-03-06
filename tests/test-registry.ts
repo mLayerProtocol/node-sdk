@@ -89,7 +89,7 @@ async function main() {
 
   const payload: ClientPayload<Message> = new ClientPayload();
   payload.data = message;
-  payload.subnet = '534e4554-0000-0000-0000-000000000000';
+  payload.app = '534e4554-0000-0000-0000-000000000000';
   payload.chainId = new ChainId('84532');
   payload.eventType = MemberMessageEventType.SendMessageEvent;
   payload.validator = validator.address;

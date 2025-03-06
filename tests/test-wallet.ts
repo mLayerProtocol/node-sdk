@@ -35,7 +35,8 @@ async function main() {
 
 
   wallet.name = 'New Network';
-  wallet.subnet = 'c870ce77c41a36f1fc60966c8c4e111964a32af400e7d9cbe78ac9117d4e0cdb';
+  wallet.app =
+    'c870ce77c41a36f1fc60966c8c4e111964a32af400e7d9cbe78ac9117d4e0cdb';
 
   const payload: ClientPayload<Wallet> = new ClientPayload();
   payload.data = wallet;

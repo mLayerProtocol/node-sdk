@@ -44,7 +44,7 @@ async function main() {
   authority.timestamp = 1714408257702;
   authority.topicIds = '*';
   // authority.privilege = 3;
-  authority.subnet = '534e4554-0000-0000-0000-000000000000';
+  authority.app = '534e4554-0000-0000-0000-000000000000';
   authority.duration = 30 * 24 * 60 * 60 * 1000; // 30 days
 
   const encoded = authority.encodeBytes();

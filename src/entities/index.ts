@@ -5,7 +5,7 @@ export * from "./topic";
 export * from "./address";
 export * from "./message";
 export * from "./subscription";
-export * from './subnet';
+export * from './application';
 export * from "./wallet";
 export * from './types';
 

@@ -7,14 +7,14 @@ export enum EntityType {
   Topic = 'top',
   Subscription = 'sub',
   Message = 'msg',
-  Subnet = 'snet',
+  Application = 'app',
   Wallet = 'wal',
 }
 
 export type FilterValue = '*' | EntityType | UUID;
-type ExludedFilter = Exclude<string, 'snet'>;
+type ExludedFilter = Exclude<string, 'app'>;
 export type FilterV2 = {
-  snet: UUID;
+  app: UUID;
   t: EntityType;
   f: Record<ExludedFilter, any>;
 };
@@ -31,7 +31,7 @@ export interface ISubRespData extends IEvents {
 type PartialWithRequired<T, K extends keyof T> = Partial<T> & Pick<T, K>;
 type PartialEvent = PartialWithRequired<
   IEvents,
-  | 'snet'
+  | 'app'
   | 'id'
   | 'blk'
   | 'cy'

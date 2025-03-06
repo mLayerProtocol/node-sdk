@@ -19,7 +19,7 @@ export interface ITopic {
   ts?: number; // timestamp in millisec
   pub: boolean; // is public topic
   rO: boolean;
-  snet: string; // subnet
+  app: string; // app
   dSubRol: SubscriberRole;
   // sig?: HexString;
   // hash?: HexString;
@@ -35,7 +35,7 @@ export class Topic extends BaseEntity {
   public timestamp: number = 0;
   public public: boolean = false;
   public readOnly: boolean = false;
-  public subnet: string = '';
+  public app: string = '';
   public defaultSubscriberRole: SubscriberRole = 0;
 
   /**
@@ -54,7 +54,7 @@ export class Topic extends BaseEntity {
       // ts: this.timestamp, // timestamp in millisec
       pub: this.public, // is public topic
       rO: this.readOnly,
-      snet: this.subnet,
+      app: this.app,
     };
   }
   /*
@@ -65,7 +65,7 @@ encoder.EncoderParam{Type: encoder.StringEncoderDataType, Value: topic.ID},
 		encoder.EncoderParam{Type: encoder.BoolEncoderDataType, Value: *topic.Public},
 		encoder.EncoderParam{Type: encoder.StringEncoderDataType, Value: topic.Ref},
 		encoder.EncoderParam{Type: encoder.BoolEncoderDataType, Value: *topic.ReadOnly},
-		encoder.EncoderParam{Type: encoder.StringEncoderDataType, Value: topic.Subnet},
+		encoder.EncoderParam{Type: encoder.StringEncoderDataType, Value: topic.Application},
 */
   /**
    * @override
@@ -80,7 +80,7 @@ encoder.EncoderParam{Type: encoder.StringEncoderDataType, Value: topic.ID},
       { type: 'boolean', value: this.public },
       { type: 'boolean', value: this.readOnly },
       { type: 'string', value: this.ref },
-      { type: 'byte', value: Utils.uuidToBytes(this.subnet) }
+      { type: 'byte', value: Utils.uuidToBytes(this.app) }
     );
   }
 }

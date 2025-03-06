@@ -26,13 +26,13 @@ export interface IEvents {
   pH?: string; // payload hash
   err?: string; // error
   h?: string; // hash
-  snet?: string; // subnet
+  app?: string; // app
   sig?: string;
-  br?: boolean; // subnet
+  br?: boolean; // app
   blk?: BigInt;
-  cy?: BigInt; // subnet
+  cy?: BigInt; // app
   ep?: BigInt;
-  isVal?: boolean; // subnet
+  isVal?: boolean; // app
   sync?: boolean;
   val?: string; // validator
   total?: BigInt; // total;
@@ -51,7 +51,7 @@ export class Events {
   public payloadHash?: string = '';
   public error: string = '';
   public hash: string = '';
-  public subnet: string = '';
+  public app: string = '';
   public signature: string = '';
   public broadcasted: boolean = false;
   public blockNumber: BigInt = undefined;
@@ -79,13 +79,13 @@ export class Events {
       pH: this.payloadHash, // payload hash
       err: this.error, // error
       h: this.hash, // hash
-      snet: this.subnet, // subnet
+      app: this.app, // app
       sig: this.signature,
-      br: this.broadcasted, // subnet
+      br: this.broadcasted, // app
       blk: this.blockNumber,
-      cy: this.cycle, // subnet
+      cy: this.cycle, // app
       ep: this.epoch,
-      isVal: this.isValid, // subnet
+      isVal: this.isValid, // app
       sync: this.synced,
       val: this.validator, // validator
       total: this.total, // total;
@@ -108,13 +108,13 @@ export class Events {
       payloadHash: event.pH, // payload hash
       error: event.err, // error
       hash: event.h, // hash
-      subnet: event.snet, // subnet
+      app: event.app, // app
       signature: event.sig,
-      broadcasted: event.br, // subnet
+      broadcasted: event.br, // app
       blockNumber: event.blk,
-      cycle: event.cy, // subnet
+      cycle: event.cy, // app
       epoch: event.ep,
-      isValid: event.isVal, // subnet
+      isValid: event.isVal, // app
       synced: event.sync,
       validator: event.val, // validator
       total: event.total, // total;
@@ -128,7 +128,7 @@ encoder.EncoderParam{Type: encoder.StringEncoderDataType, Value: topic.ID},
 		encoder.EncoderParam{Type: encoder.BoolEncoderDataType, Value: *topic.Public},
 		encoder.EncoderParam{Type: encoder.StringEncoderDataType, Value: topic.Ref},
 		encoder.EncoderParam{Type: encoder.BoolEncoderDataType, Value: *topic.ReadOnly},
-		encoder.EncoderParam{Type: encoder.StringEncoderDataType, Value: topic.Subnet},
+		encoder.EncoderParam{Type: encoder.StringEncoderDataType, Value: topic.Application},
 // */
   //   /**
   //    * @override
@@ -146,7 +146,7 @@ encoder.EncoderParam{Type: encoder.StringEncoderDataType, Value: topic.ID},
   // // 		encoder.EncoderParam{Type: encoder.IntEncoderDataType, Value: e.Epoch},
   // // 		encoder.EncoderParam{Type: encoder.IntEncoderDataType, Value: e.EventType},
   // // 		encoder.EncoderParam{Type: encoder.HexEncoderDataType, Value: e.PreviousEvent.Hash},
-  // // 		encoder.EncoderParam{Type: encoder.ByteEncoderDataType, Value: utils.UuidToBytes(e.Subnet)},
+  // // 		encoder.EncoderParam{Type: encoder.ByteEncoderDataType, Value: utils.UuidToBytes(e.Application)},
   // // 		encoder.EncoderParam{Type: encoder.IntEncoderDataType, Value: e.Timestamp},
   // // 	)
   // // }
@@ -159,7 +159,7 @@ encoder.EncoderParam{Type: encoder.StringEncoderDataType, Value: topic.ID},
   //       { type: 'boolean', value: this.public },
   //       { type: 'boolean', value: this.readOnly },
   //       { type: 'string', value: this.ref }
-  //       // { type: 'string', value: this.subnet }
+  //       // { type: 'string', value: this.app }
   //     );
   //   }
 }

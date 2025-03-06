@@ -59,7 +59,7 @@ export const agentList = [
         h: 'ecd2ef03655a1c098dc37c86394e4cac0c19361028d733ab8b2f8f17f8cb18c3',
         val: '2c2387845a0e17281653050892d3095e7fc99ad32d79b7fbdf11c9a87671daca',
       },
-      snet: '',
+      app: '',
       CreatedAt: '2024-04-15T13:48:53.056725+01:00',
       UpdatedAt: '2024-04-17T14:26:56.894247+01:00',
       DeletedAt: null,

@@ -5,7 +5,7 @@ import axios, { AxiosResponse } from 'axios';
 import { Topic } from './entities/topic';
 import { Subscription } from './entities/subscription';
 import { Message } from './entities/message';
-import { Subnet } from './entities/subnet';
+import { Application } from './entities/application';
 import { Wallet } from './entities/wallet';
 import jaysonBrowserClient from 'jayson/lib/client/browser';
 import ClientBrowser from 'jayson/lib/client/browser';
@@ -243,21 +243,21 @@ export class Client<P> {
     return { data };
   }
 
-  public async createSubnet(
-    payload: ClientPayload<Subnet>
+  public async createApplication(
+    payload: ClientPayload<Application>
   ): Promise<Record<string, unknown>> {
     return await this.provider.makeRequest({
-      path: '/subnets',
+      path: '/projects',
       method: 'post',
       payload,
     });
   }
 
-  public async getSubnets({
+  public async getApplications({
     params,
   }: Record<string, any>): Promise<Record<string, unknown>> {
     return await this.provider.makeRequest({
-      path: '/subnets',
+      path: '/projects',
       method: 'get',
       params,
     });

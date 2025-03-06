@@ -1,8 +1,13 @@
 import { AddressString, BaseEntity, ChainId, HexString } from './base';
-import { Address } from './address';
+import { Account } from './address';
+export declare enum AdminSubnetEventType {
+    'DeleteSubnet' = 500,
+    'CreateSubnet' = 501,// m.room.create
+    'UpdateSubnet' = 509
+}
 export declare enum AuthorizeEventType {
-    'AuthorizeEvent' = 100,
-    'UnauthorizeEvent' = 101
+    'AuthorizeEvent' = 600,
+    'UnauthorizeEvent' = 601
 }
 export declare enum AdminTopicEventType {
     'DeleteTopic' = 1000,
@@ -30,11 +35,6 @@ export declare enum MemberMessageEventType {
     'DeleteMessageEvent ' = 1200,//m.room.encrypted
     'SendMessageEvent' = 1201
 }
-export declare enum AdminSubnetEventType {
-    'DeleteSubnet' = 1300,
-    'CreateSubnet' = 1301,// m.room.create
-    'UpdateSubnet' = 1309
-}
 export declare enum AdminWalletEventType {
     'DeleteWallet' = 1400,
     'CreateWallet' = 1401,// m.room.create
@@ -55,7 +55,7 @@ export interface IClientPayload {
 export declare class ClientPayload<T> extends BaseEntity {
     data: T;
     timestamp: number;
-    account: Address;
+    account: Account;
     validator: string;
     eventType: AuthorizeEventType | AdminTopicEventType | AdminSubnetEventType | AdminWalletEventType | MemberTopicEventType | MemberMessageEventType;
     authHash: string;
@@ -70,6 +70,11 @@ export declare class ClientPayload<T> extends BaseEntity {
      * @returns {IAuthorization}
      */
     asPayload(): IClientPayload;
+    /**
+     * @override
+     * @returns {IAuthorization}
+     */
+    fromPayload(payload: IClientPayload): ClientPayload<unknown>;
     sign(params: {
         chainId: string | number;
         agentPrivateKey: string;

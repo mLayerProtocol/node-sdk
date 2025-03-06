@@ -309,15 +309,11 @@ export class Utils {
           const buffer = Buffer.alloc(8);
           const bigNum = BigInt(String(Number(arg.value || 0)));
           buffer.writeBigUInt64BE(bigNum);
-          console.log('TYPPPEPEEE', arg.value, buffer.toString('hex'));
+
           buffers.push(buffer);
           break;
         case 'address':
-          console.log(
-            'ACcOUNTBUFFER',
-            Buffer.from((arg.value as string).toLowerCase()).toString('hex')
-          );
-          buffers.push(Buffer.from(arg.value as string));
+          buffers.push(Buffer.from((arg.value as string).toLowerCase()));
           // if ((arg.value as string).startsWith("0x")) {
           //   buffers.push(
           //     Buffer.from((arg.value as string).replace("0x", ""), "hex")

@@ -42,12 +42,12 @@ async function main() {
         _v: 2,
         fs: [
           {
-            snet: '15ee1c23-115d-9b6f-c005-db154b42781c',
+            app: '15ee1c23-115d-9b6f-c005-db154b42781c',
             t: EntityType.Message,
             f: {
               top: topicId,
               s: 'did:0x59fD8f94dDd1Fe6066d300F74afD5E3a01970e43',
-              snet: 'sdsd',
+              app: 'sdsd',
             },
           },
         ],

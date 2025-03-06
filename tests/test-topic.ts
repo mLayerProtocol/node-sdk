@@ -44,7 +44,7 @@ async function main() {
   payload.validator = validator.publicKey;
   payload.account = Address.fromString(agentList[0].account.address);
   payload.nonce = 0;
-  payload.subnet = "360db526-9592-b78c-1c5c-f57a92410857";
+  payload.app = '360db526-9592-b78c-1c5c-f57a92410857';
   const pb = payload.encodeBytes();
   console.log("HEXDATA", pb.toString("hex"));
   payload.signature = await Utils.signMessageEcc(pb, agentList[0].privateKey);
