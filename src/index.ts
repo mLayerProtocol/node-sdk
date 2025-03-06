@@ -243,11 +243,11 @@ export class Client<P> {
     return { data };
   }
 
-  public async createApplication(
+  public async createApp(
     payload: ClientPayload<Application>
   ): Promise<Record<string, unknown>> {
     return await this.provider.makeRequest({
-      path: '/projects',
+      path: '/apps',
       method: 'post',
       payload,
     });
@@ -257,7 +257,7 @@ export class Client<P> {
     params,
   }: Record<string, any>): Promise<Record<string, unknown>> {
     return await this.provider.makeRequest({
-      path: '/projects',
+      path: '/apps',
       method: 'get',
       params,
     });
